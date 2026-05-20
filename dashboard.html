@@ -119,6 +119,14 @@
   let priceChart, spreadChart, autoTimer;
   let history = [];
 
+  // Auto-fill proxy URL when served from Railway
+  window.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('proxy-url');
+    if (!input.value && window.location.protocol !== 'file:') {
+      input.value = window.location.origin;
+    }
+  });
+
   function fmt(n) { return '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
   function fmtPct(n) { return (n >= 0 ? '+' : '') + n.toFixed(3) + '%'; }
 
@@ -252,12 +260,4 @@
       `<tr>
         <td>${r.time}</td>
         <td>${fmt(r.gold)}</td>
-        <td>${fmt(r.xaut)}</td>
-        <td><span class="pill ${r.spread >= 0 ? 'pill-pos' : 'pill-neg'}">${r.spread >= 0 ? '+' : ''}${fmt(r.spread)}</span></td>
-        <td class="${r.pct >= 0 ? 'positive' : 'negative'}">${fmtPct(r.pct)}</td>
-      </tr>`
-    ).join('');
-  }
-</script>
-</body>
-</html>
+        <td>${fmt(r.xa

@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,6 +19,11 @@ def cmc_get(path, params):
     )
     resp.raise_for_status()
     return resp.json()
+
+
+@app.route("/")
+def dashboard():
+    return send_from_directory(".", "dashboard.html")
 
 
 @app.route("/health")
@@ -74,6 +79,4 @@ def gold():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+i
